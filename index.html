@@ -208,7 +208,7 @@
             noBtn.style.top = randomY + 'px';
             
             const newSize = Math.max(0.6, 1 - (dodgeCount * 0.08));
-            noBtn.style.transform = \`scale(\${newSize})\`;
+            noBtn.style.transform = 'scale(' + newSize + ')';
             
             if (dodgeCount === 3) setTimeout(() => alert("Please? 🥺 You know you want to!"), 100);
             else if (dodgeCount === 5) setTimeout(() => alert("Come on! I'll make it amazing! 💕"), 100);
@@ -261,7 +261,7 @@
                     const interval = setInterval(() => {
                         x += vx;
                         y += vy;
-                        heart.style.transform = \`translate(\${x}px, \${y}px) rotate(\${x * 2}deg)\`;
+                        heart.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + (x * 2) + 'deg)';
                         heart.style.opacity = Math.max(0, 1 - Math.abs(y) / 300);
                     }, 20);
                     setTimeout(() => {clearInterval(interval);heart.remove()}, 2000);
