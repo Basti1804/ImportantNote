@@ -418,14 +418,24 @@
     </style>
 </head>
 <body>
+    <!-- Neutral Landing Page (for WhatsApp preview) -->
+    <div class="landing-page" id="landingPage" style="background: white; padding: 60px 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2); text-align: center; position: relative; z-index: 10000; max-width: 90%; width: 500px;">
+        <div style="font-size: 4em; margin-bottom: 20px;">📄</div>
+        <h1 style="color: #333; font-size: 2em; margin-bottom: 20px;">Important Document</h1>
+        <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">You have a new document to review</p>
+        <button onclick="openDocument()" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px 40px; font-size: 1.2em; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            📖 Open Document
+        </button>
+    </div>
+
     <!-- Floating hearts background -->
-    <div class="heart-bg" id="heartBg"></div>
+    <div class="heart-bg" id="heartBg" style="display: none;"></div>
 
     <!-- Particles container -->
     <div class="particles" id="particles"></div>
 
     <!-- Question Page -->
-    <div class="question-container" id="questionPage">
+    <div class="question-container" id="questionPage" style="display: none;">
         <h1>💕 Will You Be My Valentine? 💕</h1>
         <div class="flower-decoration">🌹💐🌺</div>
         <p class="subtitle">Choose wisely... there's only one right answer! 😏</p>
@@ -438,7 +448,7 @@
     </div>
 
     <!-- Success Page -->
-    <div class="success-container" id="successPage">
+    <div class="success-container" id="successPage" style="display: none;">
         <h1>🎉 YAYYY!!! 🎉</h1>
         <div class="celebration">💕💖💗💓💝</div>
         <p style="font-size: 1.6em;">You've made me the happiest person in the ENTIRE UNIVERSE!</p>
@@ -455,8 +465,7 @@
             <br><br>
             I can't wait to make you smile every single day! 😊
             <br><br>
-            <a href="mailto:sebastianmayrhofer04@gmail.com?subject=I%20Said%20Yes!%20💕&body=I%20said%20YES%20to%20being%20your%20Valentine!%20💖%0A%0AI%20can't%20wait%20for%20our%20perfect%20Valentine's%20Day%20together!%20🥰%0A%0AYou%20made%20this%20so%20special!%20💕" 
-               class="email-btn">
+            <a href="/cdn-cgi/l/email-protection#552630373426213c343b38342c273d3a3330276561153238343c397b363a386a2620373f303621681c70676506343c317067650c302674706765a5cac7c073373a312c681c70676526343c317067650c1006706765213a70676537303c3b327067652c3a2027706765033439303b213c3b3074706765a5cac7c37065147065141c70676536343b722170676522343c21706765333a277067653a202770676525302733303621706765033439303b213c3b30722670676511342c706765213a3230213d302774706765a5caf0e57065147065140c3a2070676538343130706765213d3c26706765263a706765262530363c343974706765a5cac7c0" class="email-btn">
                 📧 Send Love Letter 💌
             </a>
         </div>
@@ -468,7 +477,36 @@
         </p>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Transition from landing page to Valentine content
+        function openDocument() {
+            const landing = document.getElementById('landingPage');
+            const heartBg = document.getElementById('heartBg');
+            const questionPage = document.getElementById('questionPage');
+            
+            // Fade out landing page
+            landing.style.transition = 'opacity 0.5s, transform 0.5s';
+            landing.style.opacity = '0';
+            landing.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                landing.style.display = 'none';
+                heartBg.style.display = 'block';
+                questionPage.style.display = 'block';
+                
+                // Fade in Valentine page
+                questionPage.style.opacity = '0';
+                questionPage.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    questionPage.style.transition = 'opacity 0.5s, transform 0.5s';
+                    questionPage.style.opacity = '1';
+                    questionPage.style.transform = 'scale(1)';
+                    initNoButton();
+                    createHearts();
+                }, 50);
+            }, 500);
+        }
+        
         // Create floating hearts
         function createHearts() {
             const heartBg = document.getElementById('heartBg');
@@ -485,7 +523,7 @@
             }
         }
 
-        createHearts();
+        // Don't auto-create hearts on load anymore
 
         // Enhanced No button behavior
         const noBtn = document.getElementById('noBtn');
@@ -503,7 +541,8 @@
             noBtnInitialized = true;
         }
 
-        setTimeout(initNoButton, 300);
+        // Will be initialized when document is opened
+        // setTimeout(initNoButton, 300);
         window.addEventListener('resize', initNoButton);
         
         function moveNoButton() {
@@ -617,15 +656,4 @@
             confetti.style.position = 'fixed';
             confetti.style.fontSize = (20 + Math.random() * 30) + 'px';
             confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.top = '-50px';
-            confetti.style.zIndex = '9998';
-            confetti.style.animation = 'float 5s linear';
-            confetti.style.pointerEvents = 'none';
-            confetti.style.opacity = '0.8';
-            document.body.appendChild(confetti);
-            
-            setTimeout(() => confetti.remove(), 5000);
-        }
-    </script>
-</body>
-</html>
+            confetti.style.top 
