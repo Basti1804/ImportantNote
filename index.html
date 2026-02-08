@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕 Be My Valentine? 💕</title>
+    <meta property="og:title" content="Important Document">
+    <meta property="og:description" content="Please review this document">
+    <meta name="description" content="Document for review">
+    <title>Important Document</title>
     <style>
         * {
             margin: 0;
@@ -114,13 +117,13 @@
         .btn-yes {
             background: linear-gradient(135deg, #ff1744, #ff5252);
             color: white;
-            animation: wiggle 1s infinite;
+            animation: wiggle 1s infinite, grow 3s infinite;
             position: relative;
             z-index: 10;
         }
 
         .btn-yes:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) !important;
             box-shadow: 0 12px 30px rgba(255, 23, 68, 0.4);
         }
 
@@ -130,6 +133,15 @@
             }
             50% {
                 transform: rotate(2deg);
+            }
+        }
+
+        @keyframes grow {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
             }
         }
 
@@ -255,28 +267,31 @@
     <div class="success-container" id="successPage">
         <h1>🎉 YAYYY!!! 🎉</h1>
         <div class="celebration">💕💖💗💓💝</div>
-        <p>You've made me the happiest person in the world!</p>
+        <p>You've made me the happiest person in the ENTIRE UNIVERSE!</p>
         <div class="flower-decoration">🌸🌺🌹🌷🌻💐</div>
+        <p style="font-size: 1.8em; margin: 20px 0; color: #ff1744;">I KNEW YOU'D SAY YES! 😍</p>
         <div class="love-message">
             💌 Now we can spend the most romantic Valentine's Day together! 💌
             <br><br>
             Get ready for endless cuddles, sweet surprises, and all the love you deserve! 🥰
             <br><br>
-            You + Me = Forever 💕✨
+            <strong style="font-size: 1.3em;">You + Me = Forever 💕✨</strong>
             <br><br>
-            <a href="mailto:sebastianmayrhofer04@gmail.com?subject=I%20Said%20Yes!%20💕&body=I%20said%20YES%20to%20being%20your%20Valentine!%20💖" 
-               style="display: inline-block; background: linear-gradient(135deg, #ff1744, #ff5252); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3); transition: transform 0.3s;"
-               onmouseover="this.style.transform='scale(1.1)'"
-               onmouseout="this.style.transform='scale(1)'">
+            This is going to be the BEST Valentine's Day EVER! 🎊
+            <br><br>
+            <a href="/cdn-cgi/l/email-protection#ee9d8b8c8f9d9a878f80838f979c8681888b9cdedaae89838f8782c08d8183d19d9b8c848b8d9ad3a7cbdcdebd8f878acbdcdeb78b9dcfcbdcde1e717c7bc88c818a97d3a7cbdcde9d8f878acbdcdeb7abbdcbdcde9a81cbdcde8c8b878089cbdcde97819b9ccbdcdeb88f828b809a87808bcfcbdcde1e717c78" style="display: inline-block; background: linear-gradient(135deg, #ff1744, #ff5252); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 23, 68, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                 📧 Send Love Letter 💌
             </a>
         </div>
         <div class="celebration" style="font-size: 4em; margin-top: 30px;">
             🎊🎈🎁🍫🎉
         </div>
+        <p style="font-size: 2em; margin-top: 20px; animation: rainbow 2s infinite; font-weight: bold;">
+            💖 BEST. DECISION. EVER! 💖
+        </p>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Create floating hearts
         function createHearts() {
             const heartBg = document.getElementById('heartBg');
@@ -298,6 +313,7 @@
         // Make the No button run away
         const noBtn = document.getElementById('noBtn');
         let noBtnInitialized = false;
+        let dodgeCount = 0;
         
         // Initialize No button position after page loads
         setTimeout(() => {
@@ -311,8 +327,14 @@
             noBtnInitialized = true;
         }, 100);
         
-        noBtn.addEventListener('mouseenter', function() {
+        function dodgeNoButton() {
             if (!noBtnInitialized) return;
+            
+            dodgeCount++;
+            
+            // Shrink the button with each dodge (minimum 30% of original size)
+            const newScale = Math.max(0.3, 1 - (dodgeCount * 0.15));
+            noBtn.style.transform = `scale(${newScale})`;
             
             const padding = 100;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
@@ -330,22 +352,23 @@
             
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-        });
+            
+            // Add pleading messages
+            if (dodgeCount === 3) {
+                alert("Please? 🥺");
+            } else if (dodgeCount === 5) {
+                alert("Come on, you know you want to say yes! 💕");
+            } else if (dodgeCount === 8) {
+                alert("I'll make it worth your while! 🌹");
+            }
+        }
+        
+        noBtn.addEventListener('mouseenter', dodgeNoButton);
         
         // Also trigger on touch for mobile
         noBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
-            if (!noBtnInitialized) return;
-            
-            const padding = 100;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            
-            const randomX = Math.random() * maxX + padding/2;
-            const randomY = Math.random() * maxY + padding/2;
-            
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            dodgeNoButton();
         });
 
         // Handle Yes button
@@ -387,11 +410,3 @@
             heart.style.left = Math.random() * 100 + '%';
             heart.style.top = '-50px';
             heart.style.zIndex = '1000';
-            heart.style.animation = 'float 3s linear';
-            document.body.appendChild(heart);
-            
-            setTimeout(() => heart.remove(), 3000);
-        }
-    </script>
-</body>
-</html>
