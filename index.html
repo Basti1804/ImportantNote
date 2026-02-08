@@ -25,6 +25,47 @@
             position: relative;
         }
 
+        /* Landing overlay */
+        #landingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+
+        #landingOverlay .card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+        }
+
+        #landingOverlay button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 18px 45px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        #landingOverlay button:hover {
+            transform: scale(1.1);
+        }
+
         /* Animated gradient background */
         body::before {
             content: '';
@@ -418,18 +459,18 @@
     </style>
 </head>
 <body>
-    <!-- Neutral Landing Page (for WhatsApp preview) -->
-    <div class="landing-page" id="landingPage" style="background: white; padding: 60px 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2); text-align: center; position: relative; z-index: 10000; max-width: 90%; width: 500px;">
-        <div style="font-size: 4em; margin-bottom: 20px;">📄</div>
-        <h1 style="color: #333; font-size: 2em; margin-bottom: 20px;">Important Document</h1>
-        <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">You have a new document to review</p>
-        <button onclick="openDocument()" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px 40px; font-size: 1.2em; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            📖 Open Document
-        </button>
+    <!-- LANDING OVERLAY -->
+    <div id="landingOverlay">
+        <div class="card">
+            <div style="font-size: 4em; margin-bottom: 20px;">📄</div>
+            <h1 style="color: #333; font-size: 2em; margin-bottom: 20px;">Important Document</h1>
+            <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">You have a new document to review</p>
+            <button id="openBtn">📖 Open Document</button>
+        </div>
     </div>
 
     <!-- Floating hearts background -->
-    <div class="heart-bg" id="heartBg" style="display: none;"></div>
+    <div class="heart-bg" id="heartBg"></div>
 
     <!-- Particles container -->
     <div class="particles" id="particles"></div>
@@ -465,7 +506,8 @@
             <br><br>
             I can't wait to make you smile every single day! 😊
             <br><br>
-            <a href="/cdn-cgi/l/email-protection#552630373426213c343b38342c273d3a3330276561153238343c397b363a386a2620373f303621681c70676506343c317067650c302674706765a5cac7c073373a312c681c70676526343c317067650c1006706765213a70676537303c3b327067652c3a2027706765033439303b213c3b3074706765a5cac7c37065147065141c70676536343b722170676522343c21706765333a277067653a202770676525302733303621706765033439303b213c3b30722670676511342c706765213a3230213d302774706765a5caf0e57065147065140c3a2070676538343130706765213d3c26706765263a706765262530363c343974706765a5cac7c0" class="email-btn">
+            <a href="mailto:sebastianmayrhofer04@gmail.com?subject=I%20Said%20Yes!%20💕&body=I%20said%20YES%20to%20being%20your%20Valentine!%20💖%0A%0AI%20can't%20wait%20for%20our%20perfect%20Valentine's%20Day%20together!%20🥰%0A%0AYou%20made%20this%20so%20special!%20💕" 
+               class="email-btn">
                 📧 Send Love Letter 💌
             </a>
         </div>
@@ -477,36 +519,19 @@
         </p>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Transition from landing page to Valentine content
-        function openDocument() {
-            const landing = document.getElementById('landingPage');
-            const heartBg = document.getElementById('heartBg');
+    <script>
+        // Open document button handler
+        document.getElementById('openBtn').addEventListener('click', function() {
+            const landing = document.getElementById('landingOverlay');
             const questionPage = document.getElementById('questionPage');
             
-            // Fade out landing page
-            landing.style.transition = 'opacity 0.5s, transform 0.5s';
-            landing.style.opacity = '0';
-            landing.style.transform = 'scale(0.8)';
+            landing.style.display = 'none';
+            questionPage.style.display = 'block';
             
-            setTimeout(() => {
-                landing.style.display = 'none';
-                heartBg.style.display = 'block';
-                questionPage.style.display = 'block';
-                
-                // Fade in Valentine page
-                questionPage.style.opacity = '0';
-                questionPage.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    questionPage.style.transition = 'opacity 0.5s, transform 0.5s';
-                    questionPage.style.opacity = '1';
-                    questionPage.style.transform = 'scale(1)';
-                    initNoButton();
-                    createHearts();
-                }, 50);
-            }, 500);
-        }
-        
+            createHearts();
+            setTimeout(initNoButton, 100);
+        });
+
         // Create floating hearts
         function createHearts() {
             const heartBg = document.getElementById('heartBg');
@@ -523,8 +548,6 @@
             }
         }
 
-        // Don't auto-create hearts on load anymore
-
         // Enhanced No button behavior
         const noBtn = document.getElementById('noBtn');
         let dodgeCount = 0;
@@ -533,6 +556,8 @@
         // Initialize No button position
         function initNoButton() {
             const yesBtn = document.querySelector('.btn-yes');
+            if (!yesBtn) return;
+            
             const yesBtnRect = yesBtn.getBoundingClientRect();
             
             // Position below Yes button initially
@@ -541,8 +566,6 @@
             noBtnInitialized = true;
         }
 
-        // Will be initialized when document is opened
-        // setTimeout(initNoButton, 300);
         window.addEventListener('resize', initNoButton);
         
         function moveNoButton() {
@@ -550,18 +573,29 @@
             
             dodgeCount++;
             
-            const padding = 60;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            // Better boundary calculation to keep button visible
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            const padding = 20;
             
-            let randomX = Math.random() * maxX + padding;
-            let randomY = Math.random() * maxY + padding;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+            const minX = padding;
+            const minY = padding;
+            
+            // Generate random position within safe bounds
+            let randomX = minX + Math.random() * (maxX - minX);
+            let randomY = minY + Math.random() * (maxY - minY);
+            
+            // Extra safety check
+            randomX = Math.max(minX, Math.min(randomX, maxX));
+            randomY = Math.max(minY, Math.min(randomY, maxY));
             
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
             
             // Shrink button progressively
-            const newSize = Math.max(0.35, 1 - (dodgeCount * 0.12));
+            const newSize = Math.max(0.5, 1 - (dodgeCount * 0.1));
             noBtn.style.transform = `scale(${newSize})`;
             
             // Pleading messages
@@ -656,4 +690,15 @@
             confetti.style.position = 'fixed';
             confetti.style.fontSize = (20 + Math.random() * 30) + 'px';
             confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.top 
+            confetti.style.top = '-50px';
+            confetti.style.zIndex = '9998';
+            confetti.style.animation = 'float 5s linear';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.opacity = '0.8';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
