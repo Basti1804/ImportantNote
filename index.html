@@ -573,29 +573,33 @@
             
             dodgeCount++;
             
-            // Better boundary calculation to keep button visible
+            // Create a safe zone - button stays in middle 70% of screen
+            const safeZoneMargin = 0.15; // 15% margin on each side
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
-            const padding = 20;
             
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
-            const minX = padding;
-            const minY = padding;
+            // Calculate safe zone boundaries
+            const minX = screenWidth * safeZoneMargin;
+            const maxX = screenWidth * (1 - safeZoneMargin) - btnWidth;
+            const minY = screenHeight * safeZoneMargin;
+            const maxY = screenHeight * (1 - safeZoneMargin) - btnHeight;
             
-            // Generate random position within safe bounds
+            // Generate random position within safe zone
             let randomX = minX + Math.random() * (maxX - minX);
             let randomY = minY + Math.random() * (maxY - minY);
             
-            // Extra safety check
+            // Clamp values to be absolutely sure they're in bounds
             randomX = Math.max(minX, Math.min(randomX, maxX));
             randomY = Math.max(minY, Math.min(randomY, maxY));
             
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
             
-            // Shrink button progressively
-            const newSize = Math.max(0.5, 1 - (dodgeCount * 0.1));
+            // Shrink button progressively but keep it visible
+            const newSize = Math.max(0.6, 1 - (dodgeCount * 0.08));
             noBtn.style.transform = `scale(${newSize})`;
             
             // Pleading messages
